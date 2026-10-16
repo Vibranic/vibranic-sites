@@ -1,0 +1,11 @@
+/* Self-hosted variable fonts (@fontsource, GDPR: no external requests).
+   Each file only declares @font-face rules with unicode-range + font-display: swap;
+   the browser downloads a font file ONLY when the active preset uses it,
+   and only the latin range a Dutch page needs. */
+@import '@fontsource-variable/bodoni-moda/opsz';        /* atelier display */
+@import '@fontsource-variable/bodoni-moda/opsz-italic'; /* atelier italic accent words */
+@import '@fontsource-variable/jost/wght';               /* atelier body */
+@import '@fontsource-variable/big-shoulders-display/wght'; /* barber display */
+@import '@fontsource-variable/archivo/wght';            /* barber body */
+@import '@fontsource-variable/bricolage-grotesque/opsz'; /* fresh display */
+@import '@fontsource-variable/figtree/wght';            /* fresh body */

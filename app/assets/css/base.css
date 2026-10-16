@@ -1,0 +1,204 @@
+/* ═══ BASE: reset + element defaults. Tokens only, no raw values. ═══ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  hanging-punctuation: first last;
+}
+
+/* Any themed root (the <html>, or a nested preset in the style guide) paints itself. */
+[data-theme] {
+  color-scheme: var(--color-scheme);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: var(--font-body-weight);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+p,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Dutch compound words ("bruidskapsels") must never overflow on 360px. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight);
+  line-height: var(--heading-leading);
+  letter-spacing: var(--heading-tracking);
+  text-transform: var(--heading-transform);
+  text-wrap: balance;
+  hyphens: auto;
+}
+
+h1 { font-size: var(--h1-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); line-height: var(--leading-snug); }
+h4 { font-size: var(--text-lg); line-height: var(--leading-snug); }
+
+/* Accent word inside a heading: <h1>Haar dat <em>bij jou</em> past</h1> */
+:is(h1, h2, h3, .h1, .h2, .h3, .display) em {
+  font-style: var(--heading-em-style);
+  color: var(--heading-em-color);
+  background-image: var(--heading-em-bg);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+strong,
+b {
+  font-weight: var(--font-body-weight-strong);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.2em;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+hr {
+  border: 0;
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* ── Focus: always visible for keyboard users, never for mouse clicks ── */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+/* Anchor jumps land below a sticky header. */
+:target {
+  scroll-margin-top: var(--space-10);
+}
+
+/* ── Skip link: first focusable element on every page ── */
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-3);
+  inset-inline-start: var(--space-3);
+  z-index: var(--z-skip);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: var(--font-body-weight-strong);
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  color: var(--color-on-accent);
+}
+
+/* Visually hidden, still read by screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Motion ── */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

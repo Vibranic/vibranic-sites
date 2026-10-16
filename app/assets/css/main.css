@@ -1,1 +1,7 @@
-/* Global styles. Tokens + theme presets are added by the design-system step. */
+/* Entry point (registered in nuxt.config.ts). Order matters:
+   fonts → tokens (API + defaults) → themes (presets) → base → primitives. */
+@import './fonts.css';
+@import './tokens.css';
+@import './themes.css';
+@import './base.css';
+@import './primitives.css';
