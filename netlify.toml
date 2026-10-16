@@ -16,6 +16,13 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
+# @nuxt/image writes webp bytes under the original extension (.jpg/.png), fix the type.
+# Only valid while nuxt.config.ts `image.format` is ['webp'].
+[[headers]]
+  for = "/_ipx/*"
+  [headers.values]
+    Content-Type = "image/webp"
+
 [[headers]]
   for = "/_nuxt/*"
   [headers.values]
