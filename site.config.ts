@@ -46,7 +46,7 @@ export default defineSiteConfig({
 
   hero: {
     eyebrow: 'Kapsalon · Hasselt',
-    title: 'Haar dat bij jou past',
+    title: 'Haar dat *bij jou* past',
     subtitle:
       'Rustige salon, eerlijk advies en kleur die lang mooi blijft. Je bent welkom van dinsdag tot zaterdag.',
     image: {
@@ -60,7 +60,7 @@ export default defineSiteConfig({
   },
 
   services: {
-    title: 'Behandelingen & prijzen',
+    title: 'Behandelingen & *prijzen*',
     intro: 'Alle prijzen zijn inclusief btw. Lang of dik haar? We bespreken het vooraf, zonder verrassingen.',
     note: 'Prijzen kunnen afwijken bij extra lang haar of meer product.',
     categories: [
@@ -99,15 +99,15 @@ export default defineSiteConfig({
   },
 
   about: {
-    title: 'Over Studio Noor',
+    title: 'Over *Studio Noor*',
     paragraphs: [
       'Noor opende haar salon in 2019 met één idee: elke klant krijgt de tijd. Geen lopende band, maar een kapsel dat past bij je haar, je gezicht en je ochtendroutine.',
       'We werken met een klein team en met producten die we zelf gebruiken. Twijfel je over een nieuwe kleur? Kom gerust eerst langs voor gratis advies.',
     ],
     image: {
       src: '/images/demo/about.jpg',
-      alt: 'Interieur van de salon met spiegels en planten',
-      width: 1200,
+      alt: 'Kapster steekt het haar van een klant op voor een bruiloft',
+      width: 1000,
       height: 1500,
     },
     highlights: [
@@ -118,20 +118,20 @@ export default defineSiteConfig({
   },
 
   gallery: {
-    title: 'Ons werk',
+    title: 'Ons *werk*',
     intro: 'Een greep uit de kapsels van de afgelopen maanden.',
     images: [
-      { src: '/images/demo/gallery-1.jpg', alt: 'Balayage in warme blonde tinten', width: 900, height: 1200 },
-      { src: '/images/demo/gallery-2.jpg', alt: 'Korte bob, strak geknipt', width: 900, height: 1200 },
-      { src: '/images/demo/gallery-3.jpg', alt: 'Krullen gestyled met volume', width: 900, height: 1200 },
-      { src: '/images/demo/gallery-4.jpg', alt: 'Opsteekkapsel voor een huwelijk', width: 900, height: 1200 },
-      { src: '/images/demo/gallery-5.jpg', alt: 'Kapster aan het werk met een schaar', width: 900, height: 1200 },
-      { src: '/images/demo/gallery-6.jpg', alt: 'Lang haar met zachte golven', width: 900, height: 1200 },
+      { src: '/images/demo/gallery-1.jpg', alt: 'Lang haar met balayage in warme blonde tinten', width: 800, height: 1067 },
+      { src: '/images/demo/gallery-2.jpg', alt: 'Haar gestyled met een krultang in zachte krullen', width: 800, height: 1067 },
+      { src: '/images/demo/gallery-3.jpg', alt: 'Halflang haar met een gevlochten knoop, in warme koperkleur', width: 800, height: 1067 },
+      { src: '/images/demo/gallery-4.jpg', alt: 'Opgestoken haar met een witte bloem', width: 800, height: 1067 },
+      { src: '/images/demo/gallery-5.jpg', alt: 'Lang, golvend haar met veel volume', width: 800, height: 1067 },
+      { src: '/images/demo/gallery-6.jpg', alt: 'Kapster en klant lachen samen in de salon', width: 800, height: 1067 },
     ],
   },
 
   reviews: {
-    title: 'Wat klanten zeggen',
+    title: 'Wat klanten *zeggen*',
     summary: { rating: 4.9, count: 127, url: 'https://maps.google.com/' },
     items: [
       {
@@ -156,7 +156,7 @@ export default defineSiteConfig({
   },
 
   contact: {
-    title: 'Contact & openingsuren',
+    title: 'Contact & *openingsuren*',
     intro: 'Vraag of opmerking? Stuur een bericht, we antwoorden binnen één werkdag.',
     form: { enabled: true, name: 'contact' },
     hours: {

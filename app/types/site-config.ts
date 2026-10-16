@@ -52,6 +52,8 @@ export interface SiteConfig {
     name: string
     type: BusinessType
     tagline: Text
+    /** Optional logo image. Without it the header shows the business name as text. */
+    logo?: Image
     /** Display format, e.g. '011 12 34 56' */
     phone: string
     /** E.164 for tel: links, e.g. '+3211123456' */
@@ -78,6 +80,9 @@ export interface SiteConfig {
     /** 1200×630 image under /public */
     ogImage?: string
   }
+
+  /** Show the small "Website door Vibranic" credit in the footer. Default: true. */
+  showCredit?: boolean
 
   /** Which sections show, in this order. Remove a key to hide that section. */
   sections: SectionKey[]
