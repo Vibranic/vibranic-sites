@@ -33,8 +33,31 @@
    DEPTH       --shadow-sm · --shadow-md · --shadow-lg · --card-shadow
    DIVIDER     --divider-height · --divider-width · --divider-bg
    CONTROLS    --control-height · --control-height-lg · --focus-width · --focus-offset
-   MOTION      --ease-out · --ease-in-out · --duration-fast · --duration-base · --duration-slow
-   LAYERS      --z-base · --z-header · --z-overlay · --z-skip
+   MOTION      --ease-out · --ease-in-out · --ease-spring · --duration-fast · --duration-base · --duration-slow
+               --reveal-distance · --reveal-rotate
+   LAYERS      --z-base · --z-header · --z-overlay · --z-skip · --z-grain
+
+   ── Art direction layer (added 2026-10-17, see DESIGN.md) ──────────────
+   POP         --color-pop · --color-pop-hover · --color-on-pop   (the ONE loud colour; fills only,
+               never text on --color-bg) · --color-ink (outlines, hard shadows, doodles)
+   INVERT      --color-invert-bg · --color-invert-text · --color-invert-muted · --color-invert-accent
+               (.section--invert: the dark/ink band)
+   EXTRA TYPE  --font-mono · --font-accent · --display-stretch
+               --heading-em-font · --heading-em-weight · --heading-em-tracking
+               --text-giant · --giant-font · --giant-weight · --giant-stretch · --giant-leading
+               --giant-tracking · --giant-transform · --giant-char (avg glyph width, em)
+               --label-font · --label-size · --label-tracking · --label-weight
+               --btn-stretch · --btn-border-width · --btn-shadow · --btn-shadow-hover
+               --btn-primary-bg · --btn-primary-bg-hover · --btn-primary-fg · --btn-primary-border
+               --btn-lift · --btn-press-x · --btn-press-y
+               --card-border-color
+   DECOR       --outline-width · --hard-shadow · --hard-shadow-lg
+               --sticker-bg · --sticker-fg · --sticker-radius · --sticker-rotate · --sticker-shadow
+               --frame-border · --frame-shadow · --frame-rotate · --frame-radius
+               --edge-height · --edge-tile · --doodle-color · --texture-color · --texture-opacity
+               --grain-opacity · --spin-size · --spin-duration · --spin-font
+               --marquee-bg · --marquee-fg · --marquee-duration · --marquee-gap
+               --dash-length · --dash-gap · --dash-color
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* Neutral fallbacks + scale. Declared on every [data-theme] too, so tokens
@@ -163,9 +186,103 @@
   --duration-base: 240ms;
   --duration-slow: 520ms;
 
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --reveal-distance: 1.5rem;
+  --reveal-rotate: 0deg;
+
   /* ── Layers ── */
   --z-base: 1;
   --z-header: 50;
   --z-overlay: 90;
   --z-skip: 100;
+  --z-grain: 95;
+
+  /* ═══ Art direction layer. Defaults derive from the core tokens, so a
+     preset that sets nothing here still looks coherent. ═══ */
+
+  /* ── Pop + ink ── */
+  --color-pop: var(--color-accent);
+  --color-pop-hover: var(--color-accent-hover);
+  --color-on-pop: var(--color-on-accent);
+  --color-ink: var(--color-text);
+
+  /* ── Invert band (.section--invert) ── */
+  --color-invert-bg: var(--color-text);
+  --color-invert-text: var(--color-bg);
+  --color-invert-muted: var(--color-surface-alt);
+  --color-invert-accent: var(--color-highlight);
+
+  /* ── Extra type ── */
+  --font-mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-accent: var(--font-display);
+  --display-stretch: normal;
+  --heading-em-font: inherit;
+  --heading-em-weight: inherit;
+  --heading-em-tracking: inherit;
+
+  /* Viewport-filling type. .giant--fit sizes a word to its container instead. */
+  --text-giant: clamp(4.5rem, 0.5rem + 18vw, 18rem);
+  --giant-font: var(--font-display);
+  --giant-weight: var(--font-display-weight);
+  --giant-stretch: var(--display-stretch);
+  --giant-leading: 0.82;
+  --giant-tracking: -0.02em;
+  --giant-transform: uppercase;
+  --giant-char: 0.62; /* em width of a weight-1 letter in this preset's giant face */
+
+  /* Mono micro-labels (.label-mono, .rail, coordinates, "EST." tags). */
+  --label-font: var(--font-mono);
+  --label-size: var(--text-xs);
+  --label-tracking: 0.14em;
+  --label-weight: 500;
+
+  /* Buttons: the primary button reads these, so a preset can swap it to the pop colour. */
+  --btn-stretch: normal;
+  --btn-border-width: var(--border-width);
+  --btn-shadow: none;
+  --btn-shadow-hover: var(--btn-shadow);
+  --btn-primary-bg: var(--color-accent);
+  --btn-primary-bg-hover: var(--color-accent-hover);
+  --btn-primary-fg: var(--color-on-accent);
+  --btn-primary-border: transparent;
+  --btn-lift: 0rem;
+  --btn-press-x: 0rem;
+  --btn-press-y: 0.0625rem;
+  --card-border-color: var(--color-border);
+
+  /* ── Decor ── */
+  --outline-width: 2px;
+  --hard-shadow: 0.25rem 0.25rem 0 var(--color-ink);
+  --hard-shadow-lg: 0.5rem 0.5rem 0 var(--color-ink);
+
+  --sticker-bg: var(--color-pop);
+  --sticker-fg: var(--color-on-pop);
+  --sticker-radius: var(--radius-sm);
+  --sticker-rotate: -4deg;
+  --sticker-shadow: var(--hard-shadow);
+
+  --frame-border: var(--outline-width) solid var(--color-ink);
+  --frame-shadow: var(--hard-shadow-lg);
+  --frame-rotate: -2deg;
+  --frame-radius: var(--radius-image);
+
+  --edge-height: clamp(1rem, 0.6rem + 1.6vw, 2.25rem);
+  --edge-tile: 5rem;
+  --doodle-color: var(--color-ink);
+  --texture-color: var(--color-ink);
+  --texture-opacity: 0.12;
+  --grain-opacity: 0;
+
+  --spin-size: 7.5rem;
+  --spin-duration: 18s;
+  --spin-font: var(--font-mono);
+
+  --marquee-bg: var(--color-pop);
+  --marquee-fg: var(--color-on-pop);
+  --marquee-duration: 28s;
+  --marquee-gap: var(--space-6);
+
+  --dash-length: 0.6rem;
+  --dash-gap: 0.45rem;
+  --dash-color: var(--color-border-strong);
 }

@@ -1,4 +1,4 @@
-/* Self-hosted variable fonts (@fontsource, GDPR: no external requests).
+/* Self-hosted fonts (@fontsource, GDPR: no external requests).
    Each file only declares @font-face rules with unicode-range + font-display: swap;
    the browser downloads a font file ONLY when the active preset uses it,
    and only the latin range a Dutch page needs. */
@@ -7,5 +7,7 @@
 @import '@fontsource-variable/jost/wght';               /* atelier body */
 @import '@fontsource-variable/big-shoulders-display/wght'; /* barber display */
 @import '@fontsource-variable/archivo/wght';            /* barber body */
-@import '@fontsource-variable/bricolage-grotesque/opsz'; /* fresh display */
+@import '@fontsource-variable/anybody/wdth';            /* fresh display: wdth 50–150 + wght axes, ~57 KB latin */
+@import '@fontsource/instrument-serif/400-italic.css';  /* fresh accent word (<em>), ~20 KB */
+@import '@fontsource/dm-mono/500.css';                  /* fresh micro-labels, ~15 KB */
 @import '@fontsource-variable/figtree/wght';            /* fresh body */

@@ -7,11 +7,22 @@ import type { Locale, ThemePreset } from '~/types/site-config'
  */
 export const THEME_META: Record<
   ThemePreset,
-  { label: string; personality: string; display: string; body: string; themeColor: string }
+  {
+    label: string
+    personality: string
+    /** One-line art-direction concept (DESIGN.md). */
+    concept: string
+    display: string
+    body: string
+    /** Supporting faces (accent word, micro-labels), if the preset has them. */
+    extras?: string
+    themeColor: string
+  }
 > = {
   atelier: {
     label: 'Atelier',
     personality: 'Warm en verfijnd, zoals een modemagazine. Voor kapsalons en beautysalons met een rustige, elegante sfeer.',
+    concept: 'Modemagazine: boogvormige spiegelbeelden en cursieve accentwoorden.',
     display: 'Bodoni Moda',
     body: 'Jost',
     themeColor: '#f5efe6',
@@ -19,16 +30,19 @@ export const THEME_META: Record<
   barber: {
     label: 'Barber',
     personality: 'Donker, stoer en zelfzeker. Messing op zwart, strakke hoeken. Voor barbershops en herenkappers.',
+    concept: 'Chicago-uithangbord: torenhoge koppen en een barberpaal-streep.',
     display: 'Big Shoulders Display',
     body: 'Archivo',
     themeColor: '#111110',
   },
   fresh: {
     label: 'Fresh',
-    personality: 'Licht, fris en speels. Ronde knoppen en een perzik accent. Voor nagelstudio’s, lash- en beautystudio’s.',
-    display: 'Bricolage Grotesque',
+    personality: 'Jong, eigenzinnig en met de hand afgewerkt. Papier, inkt en één felle limoenkleur. Voor kapsalons, nagel-, lash- en beautystudio’s met karakter.',
+    concept: 'Studio Zine: het eigen magazine van de salon, met reuzentype, stickers en krabbels in de kantlijn.',
+    display: 'Anybody',
     body: 'Figtree',
-    themeColor: '#f3f7f5',
+    extras: 'Instrument Serif · DM Mono',
+    themeColor: '#f2efe7',
   },
 }
 

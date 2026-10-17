@@ -28,6 +28,9 @@ html {
 }
 
 body {
+  /* Tilted marquees and bleeding decor must never cause sideways scrolling.
+     clip (not hidden) keeps position: sticky working. */
+  overflow-x: clip;
   min-height: 100vh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
@@ -83,6 +86,7 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: var(--font-display-weight);
+  font-stretch: var(--display-stretch);
   line-height: var(--heading-leading);
   letter-spacing: var(--heading-tracking);
   text-transform: var(--heading-transform);
@@ -97,7 +101,11 @@ h4 { font-size: var(--text-lg); line-height: var(--leading-snug); }
 
 /* Accent word inside a heading: <h1>Haar dat <em>bij jou</em> past</h1> */
 :is(h1, h2, h3, .h1, .h2, .h3, .display) em {
+  font-family: var(--heading-em-font);
+  font-weight: var(--heading-em-weight);
   font-style: var(--heading-em-style);
+  font-stretch: normal;
+  letter-spacing: var(--heading-em-tracking);
   color: var(--heading-em-color);
   background-image: var(--heading-em-bg);
   -webkit-box-decoration-break: clone;

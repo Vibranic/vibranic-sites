@@ -1,7 +1,11 @@
 /* Entry point (registered in nuxt.config.ts). Order matters:
-   fonts → tokens (API + defaults) → themes (presets) → base → primitives. */
+   fonts → tokens (API + defaults) → themes (presets) → base → primitives
+   → signature (handmade elements) → compositions (section variants) → motion. */
 @import './fonts.css';
 @import './tokens.css';
 @import './themes.css';
 @import './base.css';
 @import './primitives.css';
+@import './signature.css';
+@import './compositions.css';
+@import './motion.css';

@@ -1,0 +1,590 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   SIGNATURE ELEMENTS: the handmade layer. Built once, usable in every preset,
+   themed only through tokens (tokens.css → "Art direction layer").
+   Spec + markup for each: DESIGN.md §3. Motion lives in motion.css.
+
+   Bands      .section--invert  .texture-topo  .grain  [data-edge] [data-edge-bottom]
+   Type       .giant .giant--fit .giant--outline  .label-mono .meta-row .tag-est .rail
+   Marks      .doodle(--*)  .decor  .rule-dashed  .leader
+   Stickers   .sticker(--ink|--paper|--pill|--vertical)  .sticker-burst  .sticker-letters  .tape
+   Objects    .spin-badge  .cta-pill  .marquee  .frame(--polaroid|--torn|--flat)  .cutout(--shaped)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Invert band: the ink-coloured section. Re-maps the core tokens locally
+   so every primitive inside (buttons, cards, links, labels) just works. ── */
+.section--invert,
+.invert {
+  --section-bg: var(--color-invert-bg);
+  --color-bg: var(--color-invert-bg);
+  --color-surface: color-mix(in srgb, var(--color-invert-text) 7%, var(--color-invert-bg));
+  --color-surface-alt: color-mix(in srgb, var(--color-invert-text) 10%, var(--color-invert-bg));
+  --color-text: var(--color-invert-text);
+  --color-text-muted: var(--color-invert-muted);
+  --color-accent: var(--color-invert-accent);
+  --color-accent-hover: var(--color-invert-text);
+  --color-on-accent: var(--color-invert-bg);
+  --color-highlight: color-mix(in srgb, var(--color-invert-text) 14%, var(--color-invert-bg));
+  --color-border: color-mix(in srgb, var(--color-invert-text) 20%, transparent);
+  --color-border-strong: color-mix(in srgb, var(--color-invert-text) 60%, var(--color-invert-bg));
+  --color-focus: var(--color-invert-accent);
+  --color-ink: var(--color-invert-text);
+  --dash-color: var(--color-invert-muted);
+  --doodle-color: var(--color-invert-accent);
+  --texture-color: var(--color-invert-text);
+  --card-border-color: var(--color-border);
+  --card-shadow: none;
+  --hard-shadow: 0.25rem 0.25rem 0 var(--color-invert-accent);
+  --hard-shadow-lg: 0.5rem 0.5rem 0 var(--color-invert-accent);
+  --sticker-shadow: var(--hard-shadow);
+  --frame-shadow: var(--hard-shadow-lg);
+  --frame-border: var(--outline-width) solid var(--color-invert-text);
+  --btn-primary-border: var(--color-invert-bg);
+  --btn-shadow: none;
+  --btn-shadow-hover: none;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ── Paper grain: put .grain on the page wrapper (decor.grain). One fixed
+   layer, a 180px SVG noise tile, opacity from the preset (0 = off). ── */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  background-image: url('/images/kit/textures/grain.svg');
+  background-size: 11.25rem;
+  opacity: var(--grain-opacity);
+}
+
+/* Grain on one block only (style guide, a single section). */
+.grain--local { position: relative; isolation: isolate; }
+.grain--local::after { position: absolute; z-index: var(--z-base); }
+
+/* ── Topographic line texture behind a section's content (Kraken). ── */
+.texture-topo {
+  isolation: isolate;
+}
+.texture-topo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--texture-color);
+  opacity: var(--texture-opacity);
+  -webkit-mask: url('/images/kit/textures/topo.svg') 0 0 / 50rem repeat;
+  mask: url('/images/kit/textures/topo.svg') 0 0 / 50rem repeat;
+}
+
+/* ── Section edges: <section class="section" data-edge="torn">. The edge is
+   painted ABOVE the section in its own --section-bg, biting into the section
+   before it. data-edge-bottom does the same downwards. ── */
+[data-edge],
+[data-edge-bottom] {
+  position: relative;
+}
+[data-edge]::before,
+[data-edge-bottom]::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  z-index: var(--z-base);
+  height: var(--edge-height);
+  background-color: var(--section-bg, var(--color-bg));
+  pointer-events: none;
+  -webkit-mask: var(--edge-mask) var(--edge-mask-pos, bottom left) / var(--edge-mask-size, 100% 100%) var(--edge-mask-repeat, no-repeat);
+  mask: var(--edge-mask) var(--edge-mask-pos, bottom left) / var(--edge-mask-size, 100% 100%) var(--edge-mask-repeat, no-repeat);
+}
+[data-edge]::before { bottom: calc(100% - 1px); }
+[data-edge-bottom]::after { top: calc(100% - 1px); transform: scaleY(-1); }
+
+[data-edge='torn'],
+[data-edge-bottom='torn'] { --edge-mask: url('/images/kit/edges/torn.svg'); }
+[data-edge='wavy'],
+[data-edge-bottom='wavy'] {
+  --edge-mask: url('/images/kit/edges/wavy.svg');
+  --edge-mask-size: var(--edge-tile) 100%;
+  --edge-mask-repeat: repeat-x;
+}
+[data-edge='scallop'],
+[data-edge-bottom='scallop'] {
+  --edge-mask: url('/images/kit/edges/scallop.svg');
+  --edge-mask-size: calc(var(--edge-tile) / 2) 100%;
+  --edge-mask-repeat: repeat-x;
+}
+
+/* ── Giant type: the headline as the hero element ── */
+.giant {
+  display: block;
+  font-family: var(--giant-font);
+  font-weight: var(--giant-weight);
+  font-stretch: var(--giant-stretch);
+  font-size: var(--text-giant);
+  line-height: var(--giant-leading);
+  letter-spacing: var(--giant-tracking);
+  text-transform: var(--giant-transform);
+  white-space: nowrap;
+}
+/* Fills its container's width: put .fit-box on the parent and
+   style="--chars: 4.43" on the element. --chars = the word's WEIGHTED letter
+   count (DESIGN.md §3.9 table: I = 0.5, M = 1.35, W = 1.55 …), computed at
+   build time by frontend. 0.97 = safety margin so it never overflows. */
+.fit-box { container-type: inline-size; }
+.giant--fit {
+  font-size: calc(100cqi * 0.97 / (var(--chars, 6) * var(--giant-char)));
+  text-align: center;
+}
+/* Sticker-type headline (Marutomo): paper letters, ink outline, hard shadow. */
+.giant--outline {
+  color: var(--color-bg);
+  -webkit-text-stroke: calc(var(--outline-width) * 1.25) var(--color-ink);
+  paint-order: stroke fill;
+  text-shadow: 0.05em 0.05em 0 var(--color-ink);
+}
+
+/* ── Micro-typography ── */
+.label-mono {
+  font-family: var(--label-font);
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+.label-mono--ink { color: var(--color-text); }
+
+/* Top-of-section meta line: KAPSALON — HASSELT ········ EST. 2019 */
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-5);
+}
+
+.tag-est {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: var(--outline-width) solid currentColor;
+  border-radius: var(--radius-pill);
+}
+
+/* Vertical side rail (Kraken). Decorative repeat of info that also exists
+   elsewhere: mark it aria-hidden. Hidden below 56rem. */
+.rail {
+  display: none;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+@media (min-width: 56rem) {
+  .rail { display: block; }
+}
+
+/* ── Doodles: <span class="doodle doodle--sparkle" aria-hidden="true"></span>
+   Colour = --doodle-color (or set `color` and --doodle-color: currentColor). ── */
+.doodle {
+  display: inline-block;
+  flex: none;
+  width: var(--doodle-size, 4rem);
+  aspect-ratio: var(--doodle-ratio, 1);
+  background-color: var(--doodle-color);
+  pointer-events: none;
+  -webkit-mask: var(--doodle) center / contain no-repeat;
+  mask: var(--doodle) center / contain no-repeat;
+}
+.doodle--arrow-curve { --doodle: url('/images/kit/doodles/arrow-curve.svg'); --doodle-ratio: 3 / 2; }
+.doodle--arrow-loop { --doodle: url('/images/kit/doodles/arrow-loop.svg'); --doodle-ratio: 7 / 4; }
+.doodle--sparkle { --doodle: url('/images/kit/doodles/sparkle.svg'); }
+.doodle--sparkles { --doodle: url('/images/kit/doodles/sparkles.svg'); }
+.doodle--underline { --doodle: url('/images/kit/doodles/underline.svg'); --doodle-ratio: 25 / 4; }
+.doodle--swirl { --doodle: url('/images/kit/doodles/swirl.svg'); }
+.doodle--motion-lines { --doodle: url('/images/kit/doodles/motion-lines.svg'); }
+.doodle--scribble-circle { --doodle: url('/images/kit/doodles/scribble-circle.svg'); --doodle-ratio: 2; }
+.doodle--dash-trail { --doodle: url('/images/kit/doodles/dash-trail.svg'); --doodle-ratio: 2; }
+.doodle--flip { transform: scaleX(-1); }
+
+/* Absolutely placed decoration inside a positioned parent.
+   style="--x: 70%; --y: 10%; --r: 12deg" (top-left of the item). */
+.decor {
+  position: absolute;
+  inset-block-start: var(--y, auto);
+  inset-inline-start: var(--x, auto);
+  z-index: var(--decor-z, 3);
+  rotate: var(--r, 0deg);
+  pointer-events: none;
+}
+.decor--interactive { pointer-events: auto; }
+
+/* Circle a word in a heading: <em class="circled">bij jou</em> */
+.circled {
+  position: relative;
+  white-space: nowrap;
+}
+.circled::after {
+  content: '';
+  position: absolute;
+  inset: -0.18em -0.3em -0.12em;
+  background-color: var(--doodle-color);
+  -webkit-mask: url('/images/kit/doodles/scribble-circle.svg') center / 100% 100% no-repeat;
+  mask: url('/images/kit/doodles/scribble-circle.svg') center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+/* Hand-drawn underline under a word */
+.scribbled {
+  position: relative;
+  isolation: isolate; /* keeps the z-index:-1 scribble above the section background */
+  white-space: nowrap;
+}
+.scribbled::after {
+  content: '';
+  position: absolute;
+  inset-inline: -0.05em;
+  inset-block-end: -0.12em;
+  height: 0.28em;
+  background-color: var(--color-pop);
+  -webkit-mask: url('/images/kit/doodles/underline.svg') center / 100% 100% no-repeat;
+  mask: url('/images/kit/doodles/underline.svg') center / 100% 100% no-repeat;
+  z-index: -1;
+}
+
+/* ── Dashed rules + menu leaders ── */
+.rule-dashed {
+  display: block;
+  width: 100%;
+  height: var(--outline-width);
+  border: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--dash-color) 0 var(--dash-length),
+    transparent var(--dash-length) calc(var(--dash-length) + var(--dash-gap))
+  );
+}
+.leader {
+  flex: 1 1 1.5rem;
+  min-width: 1.5rem;
+  align-self: end;
+  margin-block-end: 0.35em;
+  border-block-end: var(--outline-width) dotted var(--dash-color);
+}
+
+/* ── Stickers: rotated label, outlined, hard shadow ── */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4em 0.85em;
+  background-color: var(--sticker-bg);
+  color: var(--sticker-fg);
+  border: var(--outline-width) solid var(--color-ink);
+  border-radius: var(--sticker-radius);
+  box-shadow: var(--sticker-shadow);
+  font-family: var(--font-display);
+  font-size: var(--sticker-size, var(--text-sm));
+  font-weight: var(--font-display-weight);
+  font-stretch: var(--btn-stretch);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  white-space: nowrap;
+  rotate: var(--sticker-rotate);
+  transition:
+    rotate var(--duration-base) var(--ease-spring),
+    scale var(--duration-base) var(--ease-spring);
+}
+.sticker--ink { --sticker-bg: var(--color-ink); --sticker-fg: var(--color-bg); }
+.sticker--paper { --sticker-bg: var(--color-surface); --sticker-fg: var(--color-text); }
+.sticker--pill { --sticker-radius: var(--radius-pill); }
+.sticker--right { --sticker-rotate: 4deg; }
+.sticker--vertical {
+  writing-mode: vertical-rl;
+  padding: 0.85em 0.45em;
+}
+
+/* Starburst sticker. The shadow is a drop-shadow on the wrapper because a
+   mask would cut a box-shadow off. */
+.sticker-burst {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--burst-size, 6.5rem);
+  aspect-ratio: 1;
+  color: var(--sticker-fg);
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight);
+  font-stretch: var(--btn-stretch);
+  font-size: var(--text-sm);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  rotate: calc(var(--sticker-rotate) * -2);
+  filter: drop-shadow(0.1875rem 0.1875rem 0 var(--color-ink));
+}
+.sticker-burst::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--sticker-bg);
+  -webkit-mask: url('/images/kit/shapes/burst.svg') center / contain no-repeat;
+  mask: url('/images/kit/shapes/burst.svg') center / contain no-repeat;
+}
+.sticker-burst > span { position: relative; padding: var(--space-3); }
+
+/* One letter per tile, alternating tilt (Marutomo). Split the word into
+   <span aria-hidden="true">; put the whole word in .sr-only next to it. */
+.sticker-letters {
+  display: inline-flex;
+  gap: 0.12em;
+}
+.sticker-letters > span {
+  display: grid;
+  place-items: center;
+  min-width: 1.15em;
+  padding: 0.08em 0.12em;
+  background-color: var(--sticker-bg);
+  color: var(--sticker-fg);
+  border: var(--outline-width) solid var(--color-ink);
+  box-shadow: var(--sticker-shadow);
+  font-family: var(--font-display);
+  font-weight: var(--giant-weight);
+  font-stretch: var(--giant-stretch);
+  line-height: 1;
+  text-transform: uppercase;
+  rotate: -4deg;
+}
+.sticker-letters > span:nth-child(even) { rotate: 3deg; translate: 0 0.12em; }
+
+/* Washi tape strip (pins a photo / note to the page). */
+.tape {
+  display: block;
+  width: var(--tape-width, 6.5rem);
+  height: var(--tape-height, 1.75rem);
+  background-color: color-mix(in srgb, var(--color-pop) 78%, transparent);
+  clip-path: polygon(3% 0, 97% 0, 100% 22%, 96% 45%, 100% 70%, 97% 100%, 3% 100%, 0 75%, 4% 50%, 0 25%);
+  rotate: var(--r, -6deg);
+}
+
+/* ── Rotating circular text badge ──
+   <a class="spin-badge" href="#contact" aria-label="Maak een afspraak">
+     <svg class="spin-badge__ring" viewBox="0 0 200 200" aria-hidden="true">
+       <defs><path id="UID" d="M100 100m-80 0a80 80 0 1 1 160 0a80 80 0 1 1-160 0"/></defs>
+       <text><textPath href="#UID" textLength="500" lengthAdjust="spacing">TEXT • TEXT • </textPath></text>
+     </svg>
+     <span class="spin-badge__core" aria-hidden="true"><span class="icon-arrow"></span></span>
+   </a> */
+.spin-badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--spin-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--spin-bg, var(--color-surface));
+  color: var(--spin-fg, var(--color-ink));
+  border: var(--outline-width) solid var(--color-ink);
+  text-decoration: none;
+}
+a.spin-badge:hover { color: var(--spin-fg, var(--color-ink)); }
+.spin-badge__ring {
+  position: absolute;
+  inset: 4%;
+  width: 92%;
+  height: 92%;
+  overflow: visible;
+}
+.spin-badge__ring text {
+  font-family: var(--spin-font);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: currentColor;
+}
+.spin-badge__core {
+  display: grid;
+  place-items: center;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--color-pop);
+  color: var(--color-on-pop);
+  border: var(--outline-width) solid var(--color-ink);
+  transition:
+    rotate var(--duration-base) var(--ease-spring),
+    scale var(--duration-base) var(--ease-spring);
+}
+.spin-badge--pop { --spin-bg: var(--color-pop); }
+.spin-badge--pop .spin-badge__core { background-color: var(--color-ink); color: var(--color-pop); }
+
+/* Arrow icon (mask, inherits currentColor). */
+.icon-arrow {
+  display: inline-block;
+  width: var(--icon-size, 1.25rem);
+  aspect-ratio: 1;
+  background-color: currentColor;
+  -webkit-mask: url('/images/kit/shapes/arrow.svg') center / contain no-repeat;
+  mask: url('/images/kit/shapes/arrow.svg') center / contain no-repeat;
+}
+.icon-arrow--ne { rotate: -45deg; }
+
+/* ── CTA pill with round arrow button (Voldog) ── */
+.cta-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  min-height: var(--control-height-lg);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-6);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: var(--btn-border-width) solid var(--btn-primary-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--btn-shadow);
+  font-family: var(--btn-font);
+  font-weight: var(--btn-weight);
+  font-stretch: var(--btn-stretch);
+  font-size: var(--text-base);
+  letter-spacing: var(--heading-tracking);
+  line-height: var(--leading-snug);
+  text-decoration: none;
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.cta-pill:hover { color: var(--color-text); box-shadow: var(--btn-shadow-hover); transform: translate(var(--btn-lift), var(--btn-lift)); }
+.cta-pill__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--color-pop);
+  color: var(--color-on-pop);
+  border: var(--outline-width) solid var(--color-ink);
+  transition: translate var(--duration-base) var(--ease-spring);
+}
+.cta-pill:hover .cta-pill__icon { translate: 0.25rem 0; }
+
+/* ── Marquee strip ──
+   <div class="marquee" role="group" aria-label="Wat we doen">
+     <div class="marquee__track">
+       <ul class="marquee__group" role="list"><li>Knippen</li><li aria-hidden="true" class="doodle doodle--sparkle"></li>…</ul>
+       <ul class="marquee__group" role="list" aria-hidden="true">…exact copy…</ul>
+     </div>
+   </div> */
+.marquee {
+  position: relative;
+  z-index: var(--z-base);
+  overflow: hidden;
+  padding-block: var(--space-4);
+  background-color: var(--marquee-bg);
+  color: var(--marquee-fg);
+  border-block: var(--outline-width) solid var(--color-ink);
+  --doodle-color: currentColor;
+}
+.marquee--tilt {
+  rotate: -2deg;
+  margin-inline: -2%;
+  margin-block: var(--space-6);
+}
+.marquee--ink { --marquee-bg: var(--color-ink); --marquee-fg: var(--color-pop); }
+.marquee__track {
+  display: flex;
+  width: max-content;
+}
+.marquee__group {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--marquee-gap);
+  min-width: 100vw;
+  padding-inline-end: var(--marquee-gap);
+  margin: 0;
+  padding-inline-start: 0;
+  list-style: none;
+  justify-content: space-around;
+  font-family: var(--font-display);
+  font-size: var(--marquee-size, var(--text-xl));
+  font-weight: var(--font-display-weight);
+  font-stretch: var(--giant-stretch);
+  letter-spacing: var(--heading-tracking);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+.marquee__group .doodle { --doodle-size: 0.9em; }
+
+/* ── Frames for photos ── */
+.frame {
+  position: relative;
+  overflow: hidden;
+  border: var(--frame-border);
+  border-radius: var(--frame-radius);
+  box-shadow: var(--frame-shadow);
+  background-color: var(--color-surface-alt);
+  rotate: var(--frame-rotate);
+  transition: rotate var(--duration-slow) var(--ease-spring);
+}
+.frame > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.frame--flat { rotate: 0deg; }
+.frame--right { --frame-rotate: 2deg; }
+/* Polaroid: paper border, caption in mono at the bottom. */
+.frame--polaroid {
+  padding: var(--space-3) var(--space-3) 0;
+  background-color: var(--color-surface);
+  --frame-radius: var(--radius-sm);
+}
+.frame--polaroid > img { border-radius: calc(var(--radius-sm) / 2); }
+.frame__caption {
+  display: block;
+  padding: var(--space-2) var(--space-1) var(--space-3);
+}
+/* Torn bottom edge, no border/shadow (border would be cut off). */
+.frame--torn {
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--edge-height) + 1px) no-repeat,
+    url('/images/kit/edges/torn.svg') bottom / 100% var(--edge-height) no-repeat;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--edge-height) + 1px) no-repeat,
+    url('/images/kit/edges/torn.svg') bottom / 100% var(--edge-height) no-repeat;
+}
+
+/* ── Cut-out subject (transparent PNG/WebP photo or illustration) ── */
+.cutout {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.cutout > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+/* Photos get a soft contact shadow; illustrations (thick outlines) don't. */
+.cutout--photo > img { filter: drop-shadow(0 1.5rem 1.75rem rgb(0 0 0 / 0.22)); }
+/* Fallback when the client only has a normal photo: a blob-shaped window. */
+.cutout--shaped { aspect-ratio: var(--cutout-ratio, 4 / 5); }
+.cutout--shaped > img {
+  object-fit: cover;
+  object-position: center;
+  -webkit-mask: url('/images/kit/shapes/blob.svg') center / 100% 100% no-repeat;
+  mask: url('/images/kit/shapes/blob.svg') center / 100% 100% no-repeat;
+}

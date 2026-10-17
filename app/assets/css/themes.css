@@ -129,61 +129,118 @@
   --divider-bg: repeating-linear-gradient(-45deg, var(--color-accent) 0 0.35rem, transparent 0.35rem 0.7rem);
 }
 
-/* ── FRESH ───────────────────────────────────────────────────────────────
-   Light, clean, young (nails, lashes, beauty studios). Bricolage Grotesque
-   (characterful, ink-trap grotesk) + Figtree (friendly geometric).
-   Jade on mint-white with a peach pop.
-   Signature: pill buttons, leaf-shaped images, peach offset "sticker" shadow. */
+/* ── FRESH (flagship, rebuilt 2026-10-17) ───────────────────────────────
+   Concept "Studio Zine": the salon's own little magazine. Warm paper with
+   grain, ink-black type, ONE acid-lime highlighter, and the stylist's notes
+   scribbled in the margin (doodles, stickers, a stamp-like rotating badge).
+   Type: Anybody (variable WIDTH axis): headings at normal width, the salon
+   name stretched to 150% across the page like a shop sign. Instrument Serif
+   italic for the accent word, DM Mono for micro-labels, Figtree for reading.
+   Distinctive decision: the width axis IS the brand: one family that goes
+   from readable heading to shop-sign without a second display font. */
 [data-theme='fresh'] {
   --color-scheme: light;
-  --color-bg: #f3f7f5;            /* mint white */
-  --color-surface: #ffffff;
-  --color-surface-alt: #e3eeea;
-  --color-text: #10282a;          /* deep teal ink: 14.3 on bg, 13.0 on alt */
-  --color-text-muted: #4a6163;    /* 6.1 on bg, 5.6 on alt */
-  --color-accent: #0d6b5f;        /* jade: 5.9 on bg, 5.4 on alt */
-  --color-accent-hover: #09564c;
-  --color-on-accent: #ffffff;     /* 6.4 on accent */
-  --color-highlight: #ffd8c7;     /* peach: text 11.7 on it */
-  --color-border: #d3e1dc;
-  --color-border-strong: #6a817f; /* 3.9 on bg, 3.5 on alt */
-  --color-error: #b42318;         /* 6.1 on bg */
-  --color-success: #0d6b5f;
+  --color-bg: #f2efe7;            /* paper */
+  --color-surface: #fbfaf6;       /* card paper */
+  --color-surface-alt: #e6e8d9;   /* sage paper */
+  --color-text: #151912;          /* ink: 15.5 on bg, 14.3 on alt, 17.0 on surface */
+  --color-text-muted: #4d5347;    /* 6.9 on bg, 6.4 on alt, 7.6 on surface */
+  --color-accent: #2d5b2a;        /* bottle green, text-safe: 6.9 on bg, 6.4 on alt */
+  --color-accent-hover: #224620;  /* 9.3 with paper on it */
+  --color-on-accent: #f2efe7;     /* 6.9 on accent */
+  --color-highlight: #e4f2a6;     /* pale lime: ink 14.9 on it */
+  --color-border: #d9d6cb;
+  --color-border-strong: #7a7f6e; /* 3.6 on bg, 3.3 on alt (inputs, ≥3:1) */
+  --color-error: #b0281c;         /* 5.8 on bg */
+  --color-success: #2d5b2a;
 
-  --font-display: 'Bricolage Grotesque Variable', 'Avenir Next', ui-sans-serif, sans-serif;
+  --color-pop: #d4f03f;           /* acid lime. Fill only: ink on it 13.9 */
+  --color-pop-hover: #c3e02a;     /* ink on it 11.9 */
+  --color-on-pop: #151912;
+  --color-ink: #151912;
+
+  --color-invert-bg: #151912;     /* ink band */
+  --color-invert-text: #f2efe7;   /* 15.5 */
+  --color-invert-muted: #b9bdae;  /* 9.3 */
+  --color-invert-accent: #d4f03f; /* lime on ink 13.9 */
+
+  --font-display: 'Anybody Variable', 'Arial Black', ui-sans-serif, sans-serif;
   --font-body: 'Figtree Variable', 'Avenir Next', ui-sans-serif, system-ui, sans-serif;
-  --font-display-weight: 700;
+  --font-accent: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --font-mono: 'DM Mono', ui-monospace, Menlo, Consolas, monospace;
+  --font-display-weight: 800;
   --font-body-weight: 400;
   --font-body-weight-strong: 600;
+  --display-stretch: 92%;
 
-  --heading-leading: 1;
-  --heading-tracking: -0.035em;
-  --heading-em-style: normal;
-  --heading-em-color: inherit;
-  --heading-em-bg: linear-gradient(transparent 58%, var(--color-highlight) 58% 92%, transparent 92%);
+  --text-4xl: clamp(2.75rem, 1.5rem + 5.4vw, 5.75rem);
+  --text-3xl: clamp(2.25rem, 1.45rem + 3.4vw, 4.25rem);
+  --text-giant: clamp(5rem, 0.5rem + 21vw, 21rem);
 
-  --eyebrow-tracking: 0.08em;
-  --eyebrow-transform: none;
-  --btn-tracking: 0;
-  --btn-font-size: var(--text-base);
+  --heading-leading: 0.95;
+  --heading-tracking: -0.03em;
+  --heading-em-style: italic;
+  --heading-em-color: currentColor; /* NOT inherit: that would pull the <html> preset's colour */
+  --heading-em-bg: none;
+  --heading-em-font: var(--font-accent);
+  --heading-em-weight: 400;
+  --heading-em-tracking: -0.01em;
 
-  --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.75rem;
+  --giant-weight: 900;
+  --giant-stretch: 150%;
+  --giant-leading: 0.8;
+  --giant-tracking: -0.035em;
+  --giant-char: 1; /* measured: the §3.9 weight table is calibrated on Anybody 150%/900 */
+
+  --eyebrow-font: var(--font-mono);
+  --eyebrow-weight: 500;
+  --eyebrow-tracking: 0.14em;
+  --eyebrow-transform: uppercase;
+  --label-tracking: 0.14em;
+
+  --btn-font: var(--font-display);
+  --btn-weight: 800;
+  --btn-stretch: 112%;
+  --btn-tracking: 0.03em;
+  --btn-transform: uppercase;
+  --btn-font-size: var(--text-sm);
+  --btn-border-width: var(--outline-width);
+  --btn-primary-bg: var(--color-pop);
+  --btn-primary-bg-hover: var(--color-pop-hover);
+  --btn-primary-fg: var(--color-on-pop);
+  --btn-primary-border: var(--color-ink);
+  --btn-shadow: 0.1875rem 0.1875rem 0 var(--color-ink);
+  --btn-shadow-hover: 0.3125rem 0.3125rem 0 var(--color-ink);
+  --btn-lift: -0.125rem;
+  --btn-press-x: 0.1875rem;
+  --btn-press-y: 0.1875rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.5rem;
   --radius-btn: var(--radius-pill);
   --radius-input: var(--radius-md);
   --radius-card: var(--radius-lg);
   --radius-badge: var(--radius-pill);
   --radius-image: var(--radius-lg);
-  --radius-feature: 3rem var(--radius-md) 3rem var(--radius-md); /* leaf */
+  --radius-feature: 3rem var(--radius-md) 3rem var(--radius-md); /* leaf, kept from Fresh v1 */
 
-  --shadow-sm: 0 1px 3px rgb(16 40 42 / 0.08);
-  --shadow-md: 0 12px 28px -14px rgb(16 40 42 / 0.25);
-  --shadow-lg: 0 28px 56px -24px rgb(16 40 42 / 0.3);
-  --card-border-width: 0;
-  --card-shadow: 0.5rem 0.5rem 0 var(--color-highlight);
+  --shadow-sm: 0 1px 3px rgb(21 25 18 / 0.08);
+  --shadow-md: 0 12px 28px -14px rgb(21 25 18 / 0.25);
+  --shadow-lg: 0 28px 56px -24px rgb(21 25 18 / 0.3);
+  --card-border-width: var(--outline-width);
+  --card-border-color: var(--color-ink);
+  --card-shadow: 0.5rem 0.5rem 0 var(--color-pop);
 
-  --divider-height: 0.375rem;
-  --divider-width: 4rem;
-  --divider-bg: var(--color-accent);
+  --divider-height: var(--outline-width);
+  --divider-width: 7rem;
+  --divider-bg: repeating-linear-gradient(90deg, var(--color-ink) 0 var(--dash-length), transparent var(--dash-length) calc(var(--dash-length) + var(--dash-gap)));
+
+  --sticker-radius: var(--radius-sm);
+  --sticker-rotate: -5deg;
+  --frame-rotate: -2.5deg;
+  --frame-radius: var(--radius-md);
+  --dash-color: var(--color-ink);
+  --texture-opacity: 0.14;
+  --grain-opacity: 0.09;
 }

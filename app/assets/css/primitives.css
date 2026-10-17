@@ -17,10 +17,14 @@
 .container--wide { width: min(100% - 2 * var(--container-pad), var(--container-wide)); }
 
 .section {
+  /* --section-bg feeds the section edges (signature.css), so an edge always
+     matches the section it belongs to. */
+  --section-bg: var(--color-bg);
+  position: relative;
   padding-block: var(--section-pad-y);
-  background-color: var(--color-bg);
+  background-color: var(--section-bg);
 }
-.section--alt { background-color: var(--color-surface-alt); }
+.section--alt { --section-bg: var(--color-surface-alt); }
 .section--tight { padding-block: calc(var(--section-pad-y) / 2); }
 
 /* Vertical rhythm: set --stack-gap on the element to change spacing. */
@@ -63,6 +67,7 @@
 .h3 {
   font-family: var(--font-display);
   font-weight: var(--font-display-weight);
+  font-stretch: var(--display-stretch);
   line-height: var(--heading-leading);
   letter-spacing: var(--heading-tracking);
   text-transform: var(--heading-transform);
@@ -96,13 +101,15 @@
   min-height: var(--control-height);
   min-width: var(--control-height);
   padding: var(--space-2) var(--space-6);
-  border: var(--border-width) solid var(--btn-border);
+  border: var(--btn-border-width) solid var(--btn-border);
   border-radius: var(--radius-btn);
+  box-shadow: var(--btn-elevation, none);
   background-color: var(--btn-bg);
   color: var(--btn-fg);
   font-family: var(--btn-font);
   font-size: var(--btn-font-size);
   font-weight: var(--btn-weight);
+  font-stretch: var(--btn-stretch);
   letter-spacing: var(--btn-tracking);
   text-transform: var(--btn-transform);
   line-height: var(--leading-snug);
@@ -114,6 +121,7 @@
     background-color var(--duration-fast) var(--ease-out),
     color var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
     transform var(--duration-fast) var(--ease-out);
 }
 .btn:hover { color: var(--btn-fg); }
@@ -126,10 +134,22 @@
 }
 
 .btn--primary {
-  --btn-bg: var(--color-accent);
-  --btn-fg: var(--color-on-accent);
+  --btn-bg: var(--btn-primary-bg);
+  --btn-fg: var(--btn-primary-fg);
+  --btn-border: var(--btn-primary-border);
+  --btn-elevation: var(--btn-shadow);
 }
-.btn--primary:hover { --btn-bg: var(--color-accent-hover); }
+.btn--primary:hover { --btn-bg: var(--btn-primary-bg-hover); }
+/* Tactile lift + press. Defaults keep the old 1px press; Fresh sets a hard
+   shadow that collapses as the button is pushed "into" the page. */
+.btn--primary:hover:not(:disabled) {
+  --btn-elevation: var(--btn-shadow-hover);
+  transform: translate(var(--btn-lift), var(--btn-lift));
+}
+.btn--primary:active:not(:disabled) {
+  --btn-elevation: none;
+  transform: translate(var(--btn-press-x), var(--btn-press-y));
+}
 
 .btn--secondary {
   --btn-border: var(--color-text);
@@ -162,7 +182,7 @@
   gap: var(--space-3);
   padding: var(--space-6);
   background-color: var(--color-surface);
-  border: var(--card-border-width) solid var(--color-border);
+  border: var(--card-border-width) solid var(--card-border-color);
   border-radius: var(--radius-card);
   box-shadow: var(--card-shadow);
 }
