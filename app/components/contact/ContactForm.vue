@@ -123,7 +123,7 @@ async function onSubmit() {
         <p class="error">{{ ui.form.failedTitle }}</p>
         <p>
           {{ ui.form.failedText }}
-          <a :href="`tel:${business.phoneE164}`">{{ business.phone }}</a> ·
+          <template v-if="business.phone"><a :href="`tel:${business.phoneE164}`">{{ business.phone }}</a> · </template>
           <a :href="`mailto:${business.email}`">{{ business.email }}</a>
         </p>
       </div>

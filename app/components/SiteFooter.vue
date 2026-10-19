@@ -20,6 +20,7 @@ const legalParts = computed(() =>
 
 const year = new Date().getFullYear()
 const showCredit = site.showCredit !== false
+const hours = contact.hours
 </script>
 
 <template>
@@ -40,21 +41,21 @@ const showCredit = site.showCredit !== false
       <div class="stack" style="--stack-gap: var(--space-3)">
         <h2 class="site-footer__heading">{{ ui.footer.contact }}</h2>
         <address class="site-footer__address">
-          {{ business.address.street }}<br />
+          <template v-if="business.address.street">{{ business.address.street }}<br /></template>
           {{ business.address.postalCode }} {{ business.address.city }}
         </address>
         <p class="stack" style="--stack-gap: 0">
-          <a class="site-footer__link" :href="`tel:${business.phoneE164}`">{{ business.phone }}</a>
+          <a v-if="business.phone" class="site-footer__link" :href="`tel:${business.phoneE164}`">{{ business.phone }}</a>
           <a class="site-footer__link" :href="`mailto:${business.email}`">{{ business.email }}</a>
         </p>
       </div>
 
-      <div class="stack" style="--stack-gap: var(--space-3)">
+      <div v-if="hours" class="stack" style="--stack-gap: var(--space-3)">
         <h2 class="site-footer__heading">{{ ui.footer.hours }}</h2>
         <dl class="site-footer__hours">
           <template v-for="day in WEEKDAYS" :key="day">
             <dt>{{ ui.days[day].short }}</dt>
-            <dd>{{ formatRanges(contact.hours[day]) || ui.hours.closed }}</dd>
+            <dd>{{ formatRanges(hours[day]) || ui.hours.closed }}</dd>
           </template>
         </dl>
       </div>

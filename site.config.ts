@@ -1,6 +1,8 @@
 /**
  * ─── CLIENT CONTENT ────────────────────────────────────────────────
  * This file IS the client site. New client = copy this file and change it.
+ * More sites in one repo: put them in sites/<name>.config.ts and build with SITE=<name>
+ * (e.g. `SITE=vibranic npm run generate` builds vibranic.be). Without SITE this file is used.
  * Brand look = `theme.preset` (+ optional `theme.overrides`).
  *
  * DEMO DATA: "Studio Noor" is a fictional salon used to show prospects the kit.

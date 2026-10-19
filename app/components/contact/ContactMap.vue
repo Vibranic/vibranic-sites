@@ -4,6 +4,7 @@ const { site } = useSite()
 const { ui, fill } = useUi()
 const { map } = site.contact
 const { business } = site
+const address = formatAddress(business.address)
 
 const loaded = ref(false)
 </script>
@@ -25,7 +26,7 @@ const loaded = ref(false)
       </svg>
       <p class="map__address">
         <strong>{{ business.name }}</strong><br />
-        {{ business.address.street }}, {{ business.address.postalCode }} {{ business.address.city }}
+        {{ address }}
       </p>
       <p class="muted map__hint">{{ ui.map.placeholderText }}</p>
       <div class="cluster map__actions">

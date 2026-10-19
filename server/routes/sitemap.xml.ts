@@ -1,4 +1,4 @@
-import site from '../../site.config'
+import site from '#site'
 import { escapeHtml } from '../../app/utils/richText'
 import { absoluteUrl } from '../../app/utils/sections'
 

@@ -10,6 +10,7 @@ useSiteSeo({
 })
 
 const hasForm = contact.form.enabled
+const address = formatAddress(business.address)
 </script>
 
 <template>
@@ -25,7 +26,7 @@ const hasForm = contact.form.enabled
         <p>{{ fill(ui.privacy.controllerText, { legalName: business.legal.legalName }) }}</p>
         <dl class="privacy__facts">
           <dt>{{ ui.privacy.controllerAddress }}</dt>
-          <dd>{{ business.address.street }}, {{ business.address.postalCode }} {{ business.address.city }}</dd>
+          <dd>{{ address }}</dd>
           <template v-if="business.legal.kbo">
             <dt>{{ ui.privacy.controllerKbo }}</dt>
             <dd>{{ business.legal.kbo }}</dd>

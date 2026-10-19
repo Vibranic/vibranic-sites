@@ -9,8 +9,13 @@ const { ui } = useUi()
 // Paper grain is on unless the client switches it off (strength comes from the preset's tokens).
 const grain = site.decor?.grain !== false
 
+// Favicon per site (seo.favicon), default the kit's /favicon.svg.
+const favicon = site.seo.favicon ?? '/favicon.svg'
 useHead({
-  link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+  link: [
+    { rel: 'icon', type: favicon.endsWith('.svg') ? 'image/svg+xml' : 'image/png', href: favicon },
+    ...(site.seo.appleTouchIcon ? [{ rel: 'apple-touch-icon' as const, href: site.seo.appleTouchIcon }] : []),
+  ],
 })
 </script>
 
