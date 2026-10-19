@@ -30,10 +30,11 @@ const tornTitle = richText(t(about.title)).replaceAll('<em>', '<em class="scribb
       </div>
 
       <div class="about-torn__media">
-        <span class="tape about-torn__tape" aria-hidden="true" />
-        <!-- data-reveal sits on a wrapper: the animation would lock the frame's own tilt and its hover. -->
-        <div data-reveal="tilt">
-          <div class="frame frame--torn about-torn__photo">
+        <!-- data-reveal sits on a wrapper: the animation would lock the frame's own tilt and its hover.
+             The tape lives INSIDE it, so tape and photo arrive together. -->
+        <div class="about-torn__reveal" data-reveal="tilt">
+          <span class="tape about-torn__tape" aria-hidden="true" />
+          <div class="frame frame--right about-torn__photo">
             <NuxtImg
               :src="about.image.src"
               :alt="t(about.image.alt)"

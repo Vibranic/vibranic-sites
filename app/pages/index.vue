@@ -30,20 +30,26 @@ const SECTION_COMPONENTS: Record<SectionKey, Component> = {
 const sections = computed(() => {
   const edge = site.decor?.edge ?? 'none'
   let previous: 'plain' | 'alt' | 'ink' = 'ink'
+  let previousWasInk = false
   return site.sections.map((key, index) => {
     let alt = false
+    let isInk = false
     if (key !== 'hero' && key !== 'marquee') {
-      const isInk = key === 'services' && site.services.variant === 'menu-board'
+      isInk = key === 'services' && site.services.variant === 'menu-board'
       const band = isInk ? 'ink' : previous === 'plain' ? 'alt' : 'plain'
       alt = band === 'alt'
       previous = band
     }
+    // Edges only mark a real change of band: the ink band's top and bottom. Plain ↔ alt
+    // sections stay straight, so the edge stays special instead of repeating everywhere.
+    const edgeHere = index > 0 && edge !== 'none' && (isInk || previousWasInk)
+    previousWasInk = isInk
     return {
       key,
       component: SECTION_COMPONENTS[key],
       alt,
-      // Every section after the first gets the edge; it takes that section's own colour.
-      edge: index > 0 && edge !== 'none' ? edge : undefined,
+      // The edge takes the colour of its own section and bites into the one before it.
+      edge: edgeHere ? edge : undefined,
     }
   })
 })

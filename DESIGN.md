@@ -272,7 +272,9 @@ Categories alternate sticker tilt automatically.
   Hover/focus lifts a frame to the front and straightens it.
 
 ### 4.6 Shared rules for frontend
-- **Edges:** if `decor.edge !== 'none'`, every section **after the first** gets `data-edge="{edge}"`.
+- **Edges (changed 2026-10-19):** if `decor.edge !== 'none'`, only the sections that border the **ink band**
+  (the menu-board services section, and the section right after it) get `data-edge="{edge}"`. Plain ↔ alt
+  sections stay straight: an edge on every section repeated and stopped being special. Demo uses `'wavy'`.
   The edge takes the colour of its own section, so the order of backgrounds decides what you see.
   Suggested Fresh order: hero (pop) → marquee `--ink` → services `--invert` → about (bg) →
   gallery `--alt` → reviews (bg) → contact `--alt`.

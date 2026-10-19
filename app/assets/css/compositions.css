@@ -331,6 +331,7 @@
   justify-self: center;
   width: 100%;
 }
+.about-torn__reveal { position: relative; }
 .about-torn__photo { aspect-ratio: 4 / 5; }
 .about-torn__tape { position: absolute; inset-block-start: calc(var(--space-3) * -1); inset-inline-start: 38%; z-index: 3; }
 .about-torn__stats {

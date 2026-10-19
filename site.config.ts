@@ -30,7 +30,7 @@ export default defineSiteConfig({
   // Studio Zine extras (all optional, see DESIGN.md §2). Delete this block and the
   // `variant` keys below for the plain look.
   decor: {
-    edge: 'torn',
+    edge: 'wavy',
     badgeText: 'Maak een afspraak',
     meta: { left: 'Kapsalon — Hasselt', est: '2019' },
   },
@@ -53,11 +53,10 @@ export default defineSiteConfig({
   },
 
   hero: {
-    // No real cut-out photo for the demo: a normal photo in a blob window ('shaped').
-    // With a transparent photo: { src: '/images/noor-cutout.webp', kind: 'photo', … }
-    variant: 'giant-type-cutout',
+    // framed-card = full-bleed photo in a rounded card, header inside. Needs no cut-out.
+    // For the giant-word + cut-out look: variant 'giant-type-cutout' + cutout: { src, kind: 'photo', … }
+    variant: 'framed-card',
     giantText: 'Noor',
-    stickers: ['Balayage-specialist'],
     eyebrow: 'Kapsalon · Hasselt',
     title: 'Haar dat *bij jou* past',
     subtitle:
