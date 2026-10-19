@@ -91,7 +91,8 @@
 
 /* ── HERO · framed-card ───────────────────────────────────────────────── */
 .hero-card {
-  padding: var(--space-3);
+  --hero-card-pad: var(--space-3);
+  padding: var(--hero-card-pad);
 }
 .hero-card__frame {
   position: relative;
@@ -99,7 +100,8 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: var(--space-5);
-  min-height: min(88svh, 52rem);
+  /* Fills the first screen exactly: nothing of the next section peeks in under the card. */
+  min-height: calc(100svh - 2 * var(--hero-card-pad));
   padding: var(--space-4) var(--space-4) var(--space-5);
   overflow: clip;
   border-radius: var(--hero-card-radius, clamp(1.25rem, 0.6rem + 2.4vw, 3rem));
@@ -169,7 +171,7 @@
 .hero-card__copy p { color: var(--color-text); }
 .hero-card__badge { --spin-size: 6rem; }
 @media (min-width: 56rem) {
-  .hero-card { padding: var(--space-4); }
+  .hero-card { --hero-card-pad: var(--space-4); }
   .hero-card__frame { padding: var(--space-5) var(--space-6) var(--space-6); }
   .hero-card__nav { display: flex; }
   .hero-card__badge { --spin-size: 8rem; }

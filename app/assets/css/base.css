@@ -27,6 +27,39 @@ html {
   line-height: var(--leading-body);
 }
 
+/* Branded scrollbar. Colours come from tokens, so every preset/client gets its own:
+   --scrollbar-thumb (default: --color-pop) · --scrollbar-track (default: --color-bg) ·
+   --scrollbar-edge (default: --color-ink, the outline round the thumb). Chrome/Safari/Edge get
+   a rounded outlined thumb; Firefox gets the thin standard version. */
+html {
+  --_sb-thumb: var(--scrollbar-thumb, var(--color-pop, var(--color-accent)));
+  --_sb-track: var(--scrollbar-track, var(--color-bg));
+  --_sb-edge: var(--scrollbar-edge, var(--color-ink, var(--color-text)));
+}
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--_sb-thumb) var(--_sb-track);
+  }
+}
+::-webkit-scrollbar {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--_sb-track);
+  border-inline-start: 1px solid color-mix(in srgb, var(--_sb-edge) 18%, transparent);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--_sb-thumb);
+  border: 2px solid var(--_sb-edge);
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--_sb-thumb) 85%, var(--_sb-edge));
+}
+
 body {
   /* Tilted marquees and bleeding decor must never cause sideways scrolling.
      clip (not hidden) keeps position: sticky working. */
