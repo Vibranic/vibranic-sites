@@ -74,9 +74,15 @@
   pointer-events: none;
   background-color: var(--texture-color);
   opacity: var(--texture-opacity);
-  /* ONE drawing that covers the section. Tiling it showed the repeat on tall/wide bands. */
-  -webkit-mask: url('/images/kit/textures/topo-wide.svg') center / cover no-repeat;
-  mask: url('/images/kit/textures/topo-wide.svg') center / cover no-repeat;
+  /* ONE generated contour map that covers the section: no tiling, no mirroring.
+     Two shapes keep the rings a similar size: wide for desktop, tall for phones.
+     Regenerate / re-seed with `node scripts/gen-topo.mjs [seed]`. */
+  --topo: url('/images/kit/textures/topo-wide.svg');
+  -webkit-mask: var(--topo) center / cover no-repeat;
+  mask: var(--topo) center / cover no-repeat;
+}
+@media (max-width: 56rem) {
+  .texture-topo::after { --topo: url('/images/kit/textures/topo-tall.svg'); }
 }
 
 /* ── Section edges: <section class="section" data-edge="torn">. The edge is
