@@ -91,7 +91,7 @@
 
 /* ── HERO · framed-card ───────────────────────────────────────────────── */
 .hero-card {
-  padding: var(--space-3) var(--space-3) 0;
+  padding: var(--space-3);
 }
 .hero-card__frame {
   position: relative;
@@ -169,7 +169,7 @@
 .hero-card__copy p { color: var(--color-text); }
 .hero-card__badge { --spin-size: 6rem; }
 @media (min-width: 56rem) {
-  .hero-card { padding: var(--space-4) var(--space-4) 0; }
+  .hero-card { padding: var(--space-4); }
   .hero-card__frame { padding: var(--space-5) var(--space-6) var(--space-6); }
   .hero-card__nav { display: flex; }
   .hero-card__badge { --spin-size: 8rem; }
