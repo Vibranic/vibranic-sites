@@ -75,8 +75,8 @@
   background-color: var(--texture-color);
   opacity: var(--texture-opacity);
   /* ONE drawing that covers the section. Tiling it showed the repeat on tall/wide bands. */
-  -webkit-mask: url('/images/kit/textures/topo.svg') center / cover no-repeat;
-  mask: url('/images/kit/textures/topo.svg') center / cover no-repeat;
+  -webkit-mask: url('/images/kit/textures/topo-wide.svg') center / cover no-repeat;
+  mask: url('/images/kit/textures/topo-wide.svg') center / cover no-repeat;
 }
 
 /* ── Section edges: <section class="section" data-edge="torn">. The edge is
