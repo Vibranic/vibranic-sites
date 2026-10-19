@@ -11,7 +11,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="section-heading stack">
+  <div class="section-heading stack" data-reveal>
     <!-- richText() escapes first, so the only markup in here is the <em> it generates. -->
     <h2 :id="id" class="h2 section-heading__title" v-html="richText(title)" />
     <hr class="divider" />

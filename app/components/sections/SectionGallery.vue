@@ -13,6 +13,14 @@ const current = ref(0)
 const opener = ref<HTMLElement | null>(null)
 const total = gallery.images.length
 
+// 'collage' scatters the first 6 photos on desktop; photo 7+ continue in a normal grid below it.
+// Lightbox indexes always refer to the full list, so we keep each photo's real position.
+const COLLAGE_COUNT = 6
+const isCollage = gallery.variant === 'collage'
+const indexed = gallery.images.map((image, index) => ({ image, index }))
+const collageImages = isCollage ? indexed.slice(0, COLLAGE_COUNT) : []
+const gridImages = isCollage ? indexed.slice(COLLAGE_COUNT) : indexed
+
 function openAt(index: number, event: Event) {
   current.value = index
   opener.value = event.currentTarget as HTMLElement
@@ -49,8 +57,39 @@ onBeforeUnmount(() => {
     <div class="container">
       <SectionHeading id="gallery-title" :title="t(gallery.title)" :intro="t(gallery.intro)" />
 
-      <ul class="grid gallery__grid" role="list" style="--grid-min: 11rem; --grid-gap: var(--space-4)">
-        <li v-for="(image, index) in gallery.images" :key="image.src">
+      <!-- collage: frames are the buttons. data-reveal sits on the <li> wrapper, never on the tilted .frame. -->
+      <ul v-if="isCollage" class="gallery-collage" role="list">
+        <li v-for="{ image, index } in collageImages" :key="image.src" data-reveal="tilt">
+          <button
+            type="button"
+            class="frame gallery__frame"
+            :aria-label="fill(ui.gallery.open, { alt: t(image.alt) })"
+            aria-haspopup="dialog"
+            @click="openAt(index, $event)"
+          >
+            <NuxtImg
+              :src="image.src"
+              :alt="t(image.alt)"
+              :width="image.width"
+              :height="image.height"
+              sizes="xs:50vw md:30vw"
+              format="webp"
+              :quality="72"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+        </li>
+      </ul>
+
+      <ul
+        v-if="gridImages.length"
+        class="grid gallery__grid"
+        :class="{ 'gallery__grid--after-collage': isCollage }"
+        role="list"
+        style="--grid-min: 11rem; --grid-gap: var(--space-4)"
+      >
+        <li v-for="{ image, index } in gridImages" :key="image.src">
           <button
             type="button"
             class="gallery__item media"
@@ -116,6 +155,16 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .gallery__grid { margin: 0; padding: 0; list-style: none; }
+.gallery__grid--after-collage { margin-top: var(--space-6); }
+
+/* Collage frame = the button: reset the button chrome, keep the .frame border/shadow. */
+.gallery__frame {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  cursor: zoom-in;
+}
 
 .gallery__item {
   display: block;

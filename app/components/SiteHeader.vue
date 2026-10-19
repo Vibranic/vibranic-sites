@@ -2,13 +2,19 @@
 import { SECTION_ID, navSections } from '~/utils/sections'
 import { linkAttrs } from '~/utils/links'
 
+/**
+ * `overlay` = transparent header that lives INSIDE the framed-card hero (DESIGN.md §4.6).
+ * It is not sticky and has no skip link (SitePage renders that one instead).
+ */
+defineProps<{ overlay?: boolean }>()
+
 const { site, t } = useSite()
 const { ui, fill } = useUi()
 
 const navItems = computed(() =>
   navSections(site.sections).map((key) => ({
     key,
-    label: ui.value.nav[key as Exclude<typeof key, 'hero'>],
+    label: ui.value.nav[key],
     // "/#id" so the links also work from the privacy page and the 404 page.
     to: `/#${SECTION_ID[key]}`,
   })),
@@ -80,10 +86,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="site-header">
-    <a class="skip-link" href="#main">{{ ui.skipToContent }}</a>
+  <header class="site-header" :class="{ 'site-header--overlay': overlay }">
+    <a v-if="!overlay" class="skip-link" href="#main">{{ ui.skipToContent }}</a>
 
-    <div class="container site-header__bar">
+    <div class="site-header__bar" :class="{ container: !overlay }">
       <NuxtLink to="/" class="brand" :aria-label="ui.homeLink(site.business.name)" @click="setOpen(false)">
         <!-- SVG logos stay as they are; raster logos get the same build-time optimization as photos. -->
         <img
@@ -145,6 +151,14 @@ onBeforeUnmount(() => {
   z-index: var(--z-header);
   background-color: var(--color-bg);
   border-bottom: var(--border-width) solid var(--color-border);
+}
+
+/* Overlay (framed-card hero): transparent, in normal flow, text colour comes from the card's .invert tokens. */
+.site-header--overlay {
+  position: relative;
+  width: 100%;
+  background: none;
+  border-bottom: 0;
 }
 
 .site-header__bar {

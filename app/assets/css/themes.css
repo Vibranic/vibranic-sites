@@ -148,21 +148,21 @@
   --color-accent: #2d5b2a;        /* bottle green, text-safe: 6.9 on bg, 6.4 on alt */
   --color-accent-hover: #224620;  /* 9.3 with paper on it */
   --color-on-accent: #f2efe7;     /* 6.9 on accent */
-  --color-highlight: #e4f2a6;     /* pale lime: ink 14.9 on it */
+  --color-highlight: #ffe3da;     /* pale coral: ink 15.0 on it */
   --color-border: #d9d6cb;
   --color-border-strong: #7a7f6e; /* 3.6 on bg, 3.3 on alt (inputs, ≥3:1) */
   --color-error: #b0281c;         /* 5.8 on bg */
   --color-success: #2d5b2a;
 
-  --color-pop: #d4f03f;           /* acid lime. Fill only: ink on it 13.9 */
-  --color-pop-hover: #c3e02a;     /* ink on it 11.9 */
+  --color-pop: #ff9b85;           /* soft coral (salons). Fill only: ink on it 8.7. Lime #d4f03f via theme.overrides for edgy/barber */
+  --color-pop-hover: #f58a72;     /* ink on it 7.6 */
   --color-on-pop: #151912;
   --color-ink: #151912;
 
   --color-invert-bg: #151912;     /* ink band */
   --color-invert-text: #f2efe7;   /* 15.5 */
   --color-invert-muted: #b9bdae;  /* 9.3 */
-  --color-invert-accent: #d4f03f; /* lime on ink 13.9 */
+  --color-invert-accent: var(--color-pop); /* coral on ink 8.7; follows the pop override */
 
   --font-display: 'Anybody Variable', 'Arial Black', ui-sans-serif, sans-serif;
   --font-body: 'Figtree Variable', 'Avenir Next', ui-sans-serif, system-ui, sans-serif;

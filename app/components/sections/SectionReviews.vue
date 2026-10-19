@@ -27,7 +27,13 @@ const summaryLink = reviews.summary?.url ? linkAttrs(reviews.summary.url) : null
       </p>
 
       <ul class="grid reviews__grid" role="list" style="--grid-min: 17rem">
-        <li v-for="(review, index) in reviews.items" :key="index" class="card reviews__card">
+        <li
+          v-for="(review, index) in reviews.items"
+          :key="index"
+          class="card reviews__card"
+          data-reveal
+          :style="{ '--reveal-delay': `${index * 60}ms` }"
+        >
           <div class="stars" role="img" :aria-label="fill(ui.reviews.stars, { n: review.rating })">
             <svg
               v-for="star in STARS"

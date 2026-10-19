@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { SECTION_ID } from '~/utils/sections'
+import { richText } from '~/utils/richText'
+import type { ServiceItem } from '~/types/site-config'
 
 defineProps<{ alt?: boolean }>()
 
@@ -9,15 +11,61 @@ const { services } = site
 
 /** 60 → '60 min' (salons list minutes, so we keep them as minutes). */
 const duration = (min: number) => `${min} ${ui.value.services.min}`
+
+const isMenuBoard = services.variant === 'menu-board'
+
+/** Menu-board meta line: '75 min · Zachte highlights…' (either part may be missing). */
+const rowMeta = (item: ServiceItem) =>
+  [item.durationMin ? duration(item.durationMin) : '', t(item.description)].filter(Boolean).join(' · ')
 </script>
 
 <template>
-  <section :id="SECTION_ID.services" class="section" :class="{ 'section--alt': alt }" aria-labelledby="services-title">
+  <!-- menu-board (DESIGN.md §4.4): ink band with topo texture; the page adds the section edge. -->
+  <section
+    v-if="isMenuBoard"
+    :id="SECTION_ID.services"
+    class="section section--invert texture-topo"
+    aria-labelledby="services-title"
+  >
+    <div class="container container--wide">
+      <div class="menu-board__head" data-reveal>
+        <div class="stack">
+          <span class="eyebrow">{{ ui.services.priceList }}</span>
+          <h2 id="services-title" class="h2" v-html="richText(t(services.title))" />
+        </div>
+        <p v-if="services.intro" class="muted">{{ t(services.intro) }}</p>
+      </div>
+
+      <div class="menu-board__cols">
+        <div v-for="(category, index) in services.categories" :key="index" class="menu-board__cat">
+          <h3 class="menu-board__cat-title"><span class="sticker">{{ t(category.name) }}</span></h3>
+          <ul class="menu-board__list" role="list">
+            <li
+              v-for="(item, itemIndex) in category.items"
+              :key="itemIndex"
+              class="menu-row"
+              data-reveal
+              :style="{ '--reveal-delay': `${itemIndex * 60}ms` }"
+            >
+              <span class="menu-row__name">{{ t(item.name) }}</span>
+              <span class="leader" aria-hidden="true" />
+              <span class="menu-row__price"><small v-if="item.priceFrom">{{ ui.services.from }}</small>{{ price(item.priceCents) }}</span>
+              <span v-if="rowMeta(item)" class="menu-row__meta label-mono">{{ rowMeta(item) }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p v-if="services.note" class="muted">{{ t(services.note) }}</p>
+    </div>
+  </section>
+
+  <section v-else :id="SECTION_ID.services" class="section" :class="{ 'section--alt': alt }" aria-labelledby="services-title">
     <div class="container">
       <SectionHeading id="services-title" :title="t(services.title)" :intro="t(services.intro)" />
 
       <div class="price-list">
-        <div v-for="(category, index) in services.categories" :key="index" class="price-category">
+        <div v-for="(category, index) in services.categories" :key="index" class="price-category" data-reveal>
           <h3 class="h3 price-category__name">{{ t(category.name) }}</h3>
           <ul class="price-category__items" role="list">
             <li v-for="(item, itemIndex) in category.items" :key="itemIndex" class="price-item">

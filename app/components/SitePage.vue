@@ -1,16 +1,29 @@
 <script setup lang="ts">
 // Shared page frame: header, <main id="main"> and footer. Used by index, privacy and error.vue.
+// `overlayHeader`: the page's hero draws the header itself (framed-card), so skip the sticky one.
+defineProps<{ overlayHeader?: boolean }>()
+
+const { site } = useSite()
+const { ui } = useUi()
+
+// Paper grain is on unless the client switches it off (strength comes from the preset's tokens).
+const grain = site.decor?.grain !== false
+
 useHead({
   link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
 })
 </script>
 
 <template>
-  <SiteHeader />
-  <main id="main" tabindex="-1">
-    <slot />
-  </main>
-  <SiteFooter />
+  <div :class="{ grain }">
+    <!-- The overlay header lives inside <main>, so the skip link has to stay out here. -->
+    <a v-if="overlayHeader" class="skip-link" href="#main">{{ ui.skipToContent }}</a>
+    <SiteHeader v-else />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </div>
 </template>
 
 <style scoped>

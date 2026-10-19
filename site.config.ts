@@ -24,7 +24,15 @@ export default defineSiteConfig({
   },
 
   theme: {
-    preset: 'atelier',
+    preset: 'fresh',
+  },
+
+  // Studio Zine extras (all optional, see DESIGN.md §2). Delete this block and the
+  // `variant` keys below for the plain look.
+  decor: {
+    edge: 'torn',
+    badgeText: 'Maak een afspraak',
+    meta: { left: 'Kapsalon — Hasselt', est: '2019' },
   },
 
   seo: {
@@ -35,7 +43,7 @@ export default defineSiteConfig({
     ogImage: '/images/demo/og.jpg',
   },
 
-  sections: ['hero', 'services', 'about', 'gallery', 'reviews', 'contact'],
+  sections: ['hero', 'marquee', 'services', 'about', 'gallery', 'reviews', 'contact'],
 
   booking: { label: 'Maak een afspraak', href: 'https://example.com/boeken' },
 
@@ -45,6 +53,11 @@ export default defineSiteConfig({
   },
 
   hero: {
+    // No real cut-out photo for the demo: a normal photo in a blob window ('shaped').
+    // With a transparent photo: { src: '/images/noor-cutout.webp', kind: 'photo', … }
+    variant: 'giant-type-cutout',
+    giantText: 'Noor',
+    stickers: ['Balayage-specialist'],
     eyebrow: 'Kapsalon · Hasselt',
     title: 'Haar dat *bij jou* past',
     subtitle:
@@ -60,6 +73,7 @@ export default defineSiteConfig({
   },
 
   services: {
+    variant: 'menu-board',
     title: 'Behandelingen & *prijzen*',
     intro: 'Alle prijzen zijn inclusief btw. Lang of dik haar? We bespreken het vooraf, zonder verrassingen.',
     note: 'Prijzen kunnen afwijken bij extra lang haar of meer product.',
@@ -99,6 +113,8 @@ export default defineSiteConfig({
   },
 
   about: {
+    variant: 'torn-frame',
+    note: 'dat zijn wij!',
     title: 'Over *Studio Noor*',
     paragraphs: [
       'Noor opende haar salon in 2019 met één idee: elke klant krijgt de tijd. Geen lopende band, maar een kapsel dat past bij je haar, je gezicht en je ochtendroutine.',
@@ -118,6 +134,7 @@ export default defineSiteConfig({
   },
 
   gallery: {
+    variant: 'collage',
     title: 'Ons *werk*',
     intro: 'Een greep uit de kapsels van de afgelopen maanden.',
     images: [

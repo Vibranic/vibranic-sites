@@ -42,6 +42,14 @@ const nl = {
     priceList: 'Prijslijst',
   },
 
+  hero: {
+    est: 'Est. {est}',
+  },
+
+  marquee: {
+    label: 'Wat we doen',
+  },
+
   gallery: {
     open: 'Vergroot foto: {alt}',
     dialogLabel: 'Fotogalerij',
@@ -196,6 +204,14 @@ const en: UiStrings = {
     min: 'min',
     hour: 'h',
     priceList: 'Price list',
+  },
+
+  hero: {
+    est: 'Est. {est}',
+  },
+
+  marquee: {
+    label: 'What we do',
   },
 
   gallery: {

@@ -6,6 +6,7 @@ import type { SectionKey } from '~/types/site-config'
  */
 export const SECTION_ID: Record<SectionKey, string> = {
   hero: 'home',
+  marquee: 'marquee',
   services: 'prijzen',
   about: 'over-ons',
   gallery: 'werk',
@@ -13,9 +14,12 @@ export const SECTION_ID: Record<SectionKey, string> = {
   contact: 'contact',
 }
 
+/** Section keys that can have a header nav link (hero and the marquee strip can't). */
+export type NavSectionKey = Exclude<SectionKey, 'hero' | 'marquee'>
+
 /** Sections that get a link in the header nav, in `site.sections` order. */
-export function navSections(sections: SectionKey[]): SectionKey[] {
-  return sections.filter((key) => key !== 'hero')
+export function navSections(sections: SectionKey[]): NavSectionKey[] {
+  return sections.filter((key): key is NavSectionKey => key !== 'hero' && key !== 'marquee')
 }
 
 /** Absolute URL for SEO tags. `path` may be '/x' or already absolute. */
