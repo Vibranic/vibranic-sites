@@ -6,7 +6,8 @@ defineProps<{ alt?: boolean }>()
 
 const { site, t } = useSite()
 const { ui, fill } = useUi()
-const { reviews } = site
+// index.vue only renders this section when the config has a `reviews` block.
+const reviews = site.reviews!
 
 const STARS = [1, 2, 3, 4, 5]
 const formatRating = (value: number) => new Intl.NumberFormat('nl-BE', { maximumFractionDigits: 1 }).format(value)

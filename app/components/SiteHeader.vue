@@ -20,11 +20,15 @@ const navItems = computed(() =>
   })),
 )
 
-// Booking link is the main CTA; without one we fall back to calling the salon.
+// Booking link is the main CTA; without one we fall back to calling the salon,
+// and without a phone number to the contact section.
 const cta = computed(() => {
   if (site.booking) {
     const attrs = linkAttrs(site.booking.href)
     return { label: t(site.booking.label), target: attrs.target, rel: attrs.rel, href: attrs.href, external: !!attrs.target }
+  }
+  if (!site.business.phone) {
+    return { label: ui.value.nav.contact, href: `/#${SECTION_ID.contact}`, target: undefined, rel: undefined, external: false }
   }
   return {
     label: fill(ui.value.nav.callUs, { phone: site.business.phone }),

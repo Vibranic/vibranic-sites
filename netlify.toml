@@ -1,4 +1,5 @@
-# Netlify: static build from site.config.ts
+# Netlify: static build from site.config.ts.
+# Another site from this repo (e.g. vibranic.be): new Netlify site, same repo, env var SITE=vibranic.
 [build]
   command = "npm run generate"
   publish = ".output/public"

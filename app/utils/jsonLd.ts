@@ -19,11 +19,11 @@ export function buildLocalBusinessJsonLd(site: SiteConfig, siteUrl: string, imag
     name: business.name,
     url: siteUrl,
     ...(imageUrl ? { image: imageUrl } : {}),
-    telephone: business.phoneE164,
+    ...(business.phoneE164 ? { telephone: business.phoneE164 } : {}),
     email: business.email,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: business.address.street,
+      ...(business.address.street ? { streetAddress: business.address.street } : {}),
       postalCode: business.address.postalCode,
       addressLocality: business.address.city,
       addressCountry: business.address.country,
@@ -32,14 +32,18 @@ export function buildLocalBusinessJsonLd(site: SiteConfig, siteUrl: string, imag
       ? { geo: { '@type': 'GeoCoordinates', latitude: business.geo.lat, longitude: business.geo.lng } }
       : {}),
     ...(business.priceRange ? { priceRange: business.priceRange } : {}),
-    openingHoursSpecification: WEEKDAYS.flatMap((day) =>
-      contact.hours[day].map(([opens, closes]) => ({
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: SCHEMA_DAY[day],
-        opens,
-        closes,
-      })),
-    ),
+    ...(contact.hours
+      ? {
+          openingHoursSpecification: WEEKDAYS.flatMap((day) =>
+            contact.hours![day].map(([opens, closes]) => ({
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: SCHEMA_DAY[day],
+              opens,
+              closes,
+            })),
+          ),
+        }
+      : {}),
     ...(sameAs.length ? { sameAs } : {}),
   }
 }

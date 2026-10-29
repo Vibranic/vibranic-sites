@@ -1,4 +1,4 @@
-import site from '~~/site.config'
+import site from '#site'
 import type { Locale, Text } from '~/types/site-config'
 
 /** Single access point for site content + small formatting helpers. */

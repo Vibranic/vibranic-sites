@@ -10,7 +10,9 @@ import {
 
 const { site, t } = useSite()
 const { ui, fill, formatDate } = useUi()
-const { hours, hoursNote, closures } = site.contact
+const { hoursNote, closures } = site.contact
+// SectionContact only renders this block when the config has opening hours.
+const hours = site.contact.hours!
 
 // Time-dependent things are computed ONLY after mount: the page is built once as static
 // HTML, so anything computed at build time would be stale the moment it is published.

@@ -56,6 +56,8 @@ export interface ServiceItem {
   /** Show "vanaf" / "from" before the price */
   priceFrom?: boolean
   durationMin?: number
+  /** Text after the price, e.g. '/maand' for a monthly fee. */
+  priceSuffix?: Text
 }
 
 export interface SiteConfig {
@@ -67,12 +69,13 @@ export interface SiteConfig {
     tagline: Text
     /** Optional logo image. Without it the header shows the business name as text. */
     logo?: Image
-    /** Display format, e.g. '011 12 34 56' */
-    phone: string
-    /** E.164 for tel: links, e.g. '+3211123456' */
-    phoneE164: string
+    /** Display format, e.g. '011 12 34 56'. Optional: without it the site shows no phone anywhere. */
+    phone?: string
+    /** E.164 for tel: links, e.g. '+3211123456'. Required when `phone` is set. */
+    phoneE164?: string
     email: string
-    address: { street: string; postalCode: string; city: string; country: 'BE' }
+    /** `street` is optional for businesses without a public address (e.g. working from home): only postcode + city show. */
+    address: { street?: string; postalCode: string; city: string; country: 'BE' }
     geo?: { lat: number; lng: number }
     priceRange?: '€' | '€€' | '€€€'
     /** Shown in the footer + privacy page (Belgian law: company details on the site). */
@@ -92,6 +95,10 @@ export interface SiteConfig {
     description: Text
     /** 1200×630 image under /public */
     ogImage?: string
+    /** Favicon under /public (.svg or .png). Default '/favicon.svg'. */
+    favicon?: string
+    /** Apple touch icon (180×180 png) under /public. */
+    appleTouchIcon?: string
   }
 
   /** Show the small "Website door Vibranic" credit in the footer. Default: true. */
@@ -168,7 +175,8 @@ export interface SiteConfig {
     images: Image[]
   }
 
-  reviews: {
+  /** Optional: leave out (and drop 'reviews' from `sections`) until there are real reviews. */
+  reviews?: {
     title: Text
     items: { author: string; text: Text; rating: 1 | 2 | 3 | 4 | 5; source?: 'Google' | 'Facebook' | 'Treatwell' }[]
     summary?: { rating: number; count: number; url?: string }
@@ -179,8 +187,9 @@ export interface SiteConfig {
     intro?: Text
     /** Netlify Forms. `name` must be unique per site. */
     form: { enabled: boolean; name: string }
-    /** Empty array = closed that day. Multiple ranges = lunch break. */
-    hours: Record<Weekday, TimeRange[]>
+    /** Empty array = closed that day. Multiple ranges = lunch break.
+     *  Optional: leave out for businesses without opening hours (hides the hours block + footer column). */
+    hours?: Record<Weekday, TimeRange[]>
     hoursNote?: Text
     /** Holidays / vacation. Dates are 'YYYY-MM-DD', inclusive. */
     closures?: { from: string; to: string; label: Text }[]

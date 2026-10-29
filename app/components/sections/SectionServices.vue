@@ -49,7 +49,7 @@ const rowMeta = (item: ServiceItem) =>
             >
               <span class="menu-row__name">{{ t(item.name) }}</span>
               <span class="leader" aria-hidden="true" />
-              <span class="menu-row__price"><small v-if="item.priceFrom">{{ ui.services.from }}</small>{{ price(item.priceCents) }}</span>
+              <span class="menu-row__price"><small v-if="item.priceFrom">{{ ui.services.from }}</small>{{ price(item.priceCents) }}<small v-if="item.priceSuffix" class="menu-row__suffix">{{ t(item.priceSuffix) }}</small></span>
               <span v-if="rowMeta(item)" class="menu-row__meta label-mono">{{ rowMeta(item) }}</span>
             </li>
           </ul>
@@ -75,7 +75,7 @@ const rowMeta = (item: ServiceItem) =>
               </div>
               <p class="price-item__price">
                 <span v-if="item.priceFrom" class="price-item__from">{{ ui.services.from }}</span>
-                {{ price(item.priceCents) }}
+                {{ price(item.priceCents) }}<span v-if="item.priceSuffix" class="price-item__suffix">{{ t(item.priceSuffix) }}</span>
               </p>
               <p v-if="item.durationMin" class="price-item__duration muted">{{ duration(item.durationMin) }}</p>
             </li>
@@ -131,6 +131,12 @@ const rowMeta = (item: ServiceItem) =>
 }
 .price-item__from {
   margin-right: var(--space-1);
+  font-weight: var(--font-body-weight);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.price-item__suffix {
+  margin-left: var(--space-1);
   font-weight: var(--font-body-weight);
   color: var(--color-text-muted);
   font-size: var(--text-sm);

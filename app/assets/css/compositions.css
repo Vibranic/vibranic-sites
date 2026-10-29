@@ -315,6 +315,8 @@
   text-transform: uppercase;
   margin-inline-end: var(--space-1);
 }
+/* Suffix after the price ("/maand") sits on the other side. */
+.menu-row__price small.menu-row__suffix { margin-inline: var(--space-1) 0; }
 .menu-row__meta { flex-basis: 100%; }
 @media (min-width: 56rem) {
   .menu-board__head { grid-template-columns: 7fr 5fr; align-items: end; }
