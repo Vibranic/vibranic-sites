@@ -21,7 +21,7 @@ export default defineSiteConfig({
     type: 'LocalBusiness',
     tagline: 'Websites voor Limburgse zaken',
     // No phone and no street on purpose: Kilian works from home (private address).
-    email: 'Vibranic-webapps@outlook.com',
+    email: 'kilian@vibranic.be',
     address: { postalCode: '3582', city: 'Koersel', country: 'BE' },
     // TODO after the KBO registration: add kbo + vat, and legalName if it changes.
     legal: { legalName: 'Kilian Frederix (Vibranic)' },
